@@ -1,0 +1,49 @@
+# =========================
+# ENV / SECRETS
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# NODE / FRONTEND
+# =========================
+node_modules/
+frontend/node_modules/
+dist/
+build/
+frontend/dist/
+frontend/build/
+
+# =========================
+# PYTHON / BACKEND
+# =========================
+venv/
+env/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+db.sqlite3
+
+# =========================
+# UPLOADS / USER FILES
+# =========================
+uploads/
+backend/uploads/
+backend/uploads/documents/
+
+# =========================
+# DOCKER
+# =========================
+*.log
+
+# =========================
+# IDE / SYSTEM
+# =========================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

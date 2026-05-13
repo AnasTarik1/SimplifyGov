@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:16
+    container_name: simplifygov_db
+    environment:
+      POSTGRES_DB: simplifygov
+      POSTGRES_USER: simplifygov_user
+      POSTGRES_PASSWORD: simplifygov_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: simplifygov_backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+      - ./backend/uploads:/app/uploads
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_NAME: simplifygov
+      DB_USER: simplifygov_user
+      DB_PASSWORD: simplifygov_pass
+      DB_HOST: db
+      DB_PORT: 5432
+
+  frontend:
+    build: ./frontend
+    container_name: simplifygov_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  chatbot:
+    build: ./chatbot
+    container_name: simplifygov_chatbot
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./chatbot:/app
+    env_file:
+      - ./chatbot/.env
+
+volumes:
+  postgres_data:
